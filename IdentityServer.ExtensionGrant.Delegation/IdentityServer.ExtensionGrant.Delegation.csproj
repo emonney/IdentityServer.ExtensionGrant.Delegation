@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <Company>IdentityServer.ExtensionGrant.Delegation</Company>
+    <PackageTags></PackageTags>
+    <RepositoryType />
+    <PackageProjectUrl></PackageProjectUrl>
+    <Authors>IdentityServer.ExtensionGrant.Delegation</Authors>
+    <Product>IdentityServer.ExtensionGrant.Delegation</Product>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="IdentityServer4" Version="3.0.1" />
+  </ItemGroup>
+
+</Project>
