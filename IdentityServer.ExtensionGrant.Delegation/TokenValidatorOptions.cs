@@ -1,4 +1,9 @@
-﻿using IdentityServer4.Validation;
+﻿// =============================
+// Email: info@ebenmonney.com
+// www.ebenmonney.com/libraries
+// =============================
+
+using IdentityServer4.Validation;
 using System;
 using System.Collections.Generic;
 

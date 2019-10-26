@@ -1,4 +1,9 @@
-﻿using IdentityServer4.Models;
+﻿// =============================
+// Email: info@ebenmonney.com
+// www.ebenmonney.com/libraries
+// =============================
+
+using IdentityServer4.Models;
 using IdentityServer4.Validation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;

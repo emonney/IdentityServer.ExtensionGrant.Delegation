@@ -1,4 +1,9 @@
-﻿using System;
+﻿// =============================
+// Email: info@ebenmonney.com
+// www.ebenmonney.com/libraries
+// =============================
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 
