@@ -1,13 +1,19 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
-    <Company>IdentityServer.ExtensionGrant.Delegation</Company>
-    <PackageTags></PackageTags>
-    <RepositoryType />
-    <PackageProjectUrl></PackageProjectUrl>
-    <Authors>IdentityServer.ExtensionGrant.Delegation</Authors>
-    <Product>IdentityServer.ExtensionGrant.Delegation</Product>
+    <Company>www.ebenmonney.com</Company>
+    <PackageTags>IdentityServer4 ExtensionGrant Delegation TokenExchange Google Facebook Twitter Social Login QuickApp</PackageTags>
+    <RepositoryType>Git</RepositoryType>
+    <PackageProjectUrl>https://ebenmonney.com</PackageProjectUrl>
+    <Authors>Ebenezer Monney</Authors>
+    <Product>QuickApp</Product>
+    <Version>1.0.0-alpha</Version>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/emonney/IdentityServer.ExtensionGrant.Delegation.git</RepositoryUrl>
+    <Copyright>www.ebenmonney.com</Copyright>
+    <PackageIconUrl>https://openid.net/images/logo/openid-icon-500x500.png</PackageIconUrl>
+    <Description>IdentityServer4 extension grant implementation to exchange external tokens for IdentityServer access tokens. Includes implementation for social logins such as google, facebook and twitter.</Description>
   </PropertyGroup>
 
   <ItemGroup>
