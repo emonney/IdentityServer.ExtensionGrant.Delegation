@@ -16,8 +16,16 @@
     <Description>IdentityServer4 extension grant implementation to exchange external tokens for IdentityServer access tokens. Includes implementation for social logins such as google, facebook and twitter.</Description>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>C:\Users\Ebenezer\Documents\GIT Projects\IdentityServer.ExtensionGrant.Delegation\IdentityServer.ExtensionGrant.Delegation\IdentityServer.ExtensionGrant.Delegation.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
-    <PackageReference Include="IdentityServer4" Version="3.0.1" />
+    <PackageReference Include="IdentityServer4" Version="3.0.2" />
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.7">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>IdentityServer.ExtensionGrant.Delegation</name>
+    </assembly>
+    <members>
+        <member name="M:IdentityServer.ExtensionGrant.Delegation.GrantValidationService`2.CreateUserAsync(System.String,System.String)">
+            <summary>
+            Override this in your application and call Base.<see cref="M:IdentityServer.ExtensionGrant.Delegation.GrantValidationService`2.CreateUserAsync(System.String,System.String)" />(). Then set the necessary properties on the returned user object.
+            call base.CreateUserAsync then set user role, set IsEnabled to true, then send verification email
+            </summary>
+            <param name="username">The username of the new user</param>
+            <param name="email">The email address of the new user</param>
+            <returns>The newly created user</returns>
+        </member>
+        <member name="T:IdentityServer.ExtensionGrant.Delegation.TokenValidatorOptions">
+            <summary>
+            Provides programmatic configuration used by <see cref="T:IdentityServer4.Validation.IExtensionGrantValidator"/>.
+            </summary>
+        </member>
+        <member name="M:IdentityServer.ExtensionGrant.Delegation.TokenValidatorOptions.AddValidator``1(System.String)">
+            <summary>
+            Add a token validator with the given provider.
+            </summary>
+            <typeparam name="T">The type for the token validator.</typeparam>
+            <param name="provider">The token provider.</param>
+        </member>
+        <member name="M:IdentityServer.ExtensionGrant.Delegation.TokenValidatorOptions.GetValidator(System.String)">
+            <summary>
+            Returns the token validator for the specified provider, or null if a validator with the provider does not exist.
+            </summary>
+            <param name="provider">The provider name of the validator to return.</param>
+            <returns>The validator type for the specified provider, or null if a validator with the provider name does not exist.</returns>
+        </member>
+        <member name="M:IdentityServer.ExtensionGrant.Delegation.TokenValidators.GoogleTokenValidator.ValidateIdentityTokenAsync(System.String,System.String,System.Boolean)">
+            <summary>
+            Not implemented. Use <see cref="M:IdentityServer.ExtensionGrant.Delegation.TokenValidators.GoogleTokenValidator.ValidateAccessTokenAsync(System.String,System.String)" />. 
+            </summary>
+        </member>
+        <member name="M:IdentityServer.ExtensionGrant.Delegation.TokenValidators.GoogleTokenValidator.ValidateRefreshTokenAsync(System.String,IdentityServer4.Models.Client)">
+            <summary>
+            Not implemented. Use <see cref="M:IdentityServer.ExtensionGrant.Delegation.TokenValidators.GoogleTokenValidator.ValidateAccessTokenAsync(System.String,System.String)" />. 
+            </summary>
+        </member>
+        <member name="T:Microsoft.Extensions.DependencyInjection.ServiceExtensions">
+            <summary>
+            Extension methods for setting up extension grant in an <see cref="T:Microsoft.Extensions.DependencyInjection.IIdentityServerBuilder" />.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.ServiceExtensions.AddDelegationGrant``2(Microsoft.Extensions.DependencyInjection.IIdentityServerBuilder)">
+            <summary>
+            Adds the extension grant <see cref="T:IdentityServer.ExtensionGrant.Delegation.DelegationGrantValidator" />.
+            </summary>
+            <typeparam name="TUser">The type representing a User in the system.</typeparam>
+            <typeparam name="TKey">The type used for the primary key for the user.</typeparam>
+            <param name="services">The <see cref="T:Microsoft.Extensions.DependencyInjection.IIdentityServerBuilder" /> to add services to.</param>
+            <returns>The <see cref="T:Microsoft.Extensions.DependencyInjection.IIdentityServerBuilder"/> so that additional calls can be chained.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.ServiceExtensions.AddDefaultSocialLoginValidators(Microsoft.Extensions.DependencyInjection.IIdentityServerBuilder)">
+            <summary>
+            Configures Google, Facebook and Twitter token validators with the <see cref="T:IdentityServer.ExtensionGrant.Delegation.DelegationGrantValidator" />. 
+            </summary>
+            <param name="services">The <see cref="T:Microsoft.Extensions.DependencyInjection.IIdentityServerBuilder" /> to add services to.</param>
+            <returns>The <see cref="T:Microsoft.Extensions.DependencyInjection.IIdentityServerBuilder"/> so that additional calls can be chained.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.ServiceExtensions.AddTokenValidators(Microsoft.Extensions.DependencyInjection.IIdentityServerBuilder,System.Action{IdentityServer.ExtensionGrant.Delegation.TokenValidatorOptions})">
+            <summary>
+            Adds custom token validators to the <see cref="T:IdentityServer.ExtensionGrant.Delegation.DelegationGrantValidator" />. 
+            </summary>
+            <param name="services">The <see cref="T:Microsoft.Extensions.DependencyInjection.IIdentityServerBuilder" /> to add services to.</param>
+            <param name="configure">An action delegate to configure the provided <see cref="T:IdentityServer.ExtensionGrant.Delegation.TokenValidatorOptions"/>.</param>
+            <returns>The <see cref="T:Microsoft.Extensions.DependencyInjection.IIdentityServerBuilder"/> so that additional calls can be chained.</returns>
+        </member>
+    </members>
+</doc>

@@ -14,7 +14,6 @@ namespace IdentityServer.ExtensionGrant.Delegation
     /// </summary>
     public class TokenValidatorOptions
     {
-
         private IDictionary<string, Type> validatorMap { get; } = new Dictionary<string, Type>(StringComparer.OrdinalIgnoreCase);
 
 

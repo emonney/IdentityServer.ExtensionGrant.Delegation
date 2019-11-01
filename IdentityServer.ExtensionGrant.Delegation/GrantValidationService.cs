@@ -8,6 +8,7 @@ using IdentityServer4.Validation;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,7 +16,7 @@ namespace IdentityServer.ExtensionGrant.Delegation
 {
     public interface IGrantValidationService
     {
-        public Task<GrantValidationResult> GetValidationResultAsync(string providerUserId, string providerEmail, string email, string provider);
+        public Task<GrantValidationResult> GetValidationResultAsync(string providerUserId, string provider, string email, string password = null);
     }
 
 
@@ -30,55 +31,63 @@ namespace IdentityServer.ExtensionGrant.Delegation
             _userManager = userManager;
         }
 
-        public async Task<GrantValidationResult> GetValidationResultAsync(string providerUserId, string providerEmail, string email, string provider)
+        public async Task<GrantValidationResult> GetValidationResultAsync(string provider, string providerUserId, string email, string password = null)
         {
             if (provider == null)
                 throw new ArgumentNullException(provider);
 
-            TUser user = null;
+            if (providerUserId == null)
+                throw new ArgumentNullException(providerUserId);
 
-            if (!string.IsNullOrWhiteSpace(providerUserId))
-                user = await _userManager.FindByLoginAsync(provider, providerUserId);
-
-            if (user == null && !string.IsNullOrWhiteSpace(providerEmail))
-                user = await _userManager.FindByEmailAsync(providerEmail);
+            TUser user = await _userManager.FindByLoginAsync(provider, providerUserId);
 
             if (user != null)
             {
                 var claims = await _userManager.GetClaimsAsync(user);
                 return new GrantValidationResult(user.Id.ToString(), provider, claims, provider, null);
             }
-            else
+            else if (!string.IsNullOrWhiteSpace(email))
             {
-                var newUserEmail = email;
+                user = await _userManager.FindByEmailAsync(email);
 
-                if (string.IsNullOrWhiteSpace(newUserEmail))
-                    newUserEmail = providerEmail;
+                if (user != null)
+                {
+                    if (string.IsNullOrWhiteSpace(password))
+                    {
+                        return new GrantValidationResult(TokenRequestErrors.InvalidRequest, $"User with email '{email}' already exists",
+                            new Dictionary<string, object> { { "email", email } });
+                    }
+                    else if (!await _userManager.CheckPasswordAsync(user, password))
+                    {
+                        if (!_userManager.SupportsUserLockout)
+                            await _userManager.AccessFailedAsync(user);
 
-                if (!string.IsNullOrWhiteSpace(newUserEmail))
+                        return new GrantValidationResult(TokenRequestErrors.InvalidGrant, "invalid_username_or_password");
+                    }
+                }
+                else
                 {
                     user = await CreateUserAsync(email, email);
+                }
 
-                    var result = await _userManager.AddLoginAsync(user, new UserLoginInfo(provider, providerUserId, provider));
-
-                    if (result.Succeeded)
-                    {
-                        var claims = await _userManager.GetClaimsAsync(user);
-                        return new GrantValidationResult(user.Id.ToString(), provider, claims, provider, null);
-                    }
-                    else
-                    {
-                        throw new Exception(string.Join(", ", result.Errors));
-                    }
+                var result = await _userManager.AddLoginAsync(user, new UserLoginInfo(provider, providerUserId, provider));
+                if (result.Succeeded)
+                {
+                    var claims = await _userManager.GetClaimsAsync(user);
+                    return new GrantValidationResult(user.Id.ToString(), provider, claims, provider, null);
+                }
+                else
+                {
+                    throw new Exception(string.Join(", ", result.Errors.Select(e => e.Description)));
                 }
             }
 
-            return new GrantValidationResult(TokenRequestErrors.InvalidRequest);
+            return new GrantValidationResult(TokenRequestErrors.InvalidGrant);
         }
 
         /// <summary>
         /// Override this in your application and call Base.<see cref="CreateUserAsync" />(). Then set the necessary properties on the returned user object.
-        /// call base.CreateUserAsync then set user role, set IsEnabled to true, then send verification email
+        /// E.g. Call base.CreateUserAsync then set user role, IsEnabled to true, send verification email, etc.
         /// </summary>
         /// <param name="username">The username of the new user</param>
         /// <param name="email">The email address of the new user</param>
@@ -88,7 +97,7 @@ namespace IdentityServer.ExtensionGrant.Delegation
             TUser user = new TUser { UserName = email, Email = email };
             var result = await _userManager.CreateAsync(user);
 
-            return result.Succeeded ? user : throw new Exception(string.Join(", ", result.Errors));
+            return result.Succeeded ? user : throw new Exception(string.Join(", ", result.Errors.Select(e => e.Description)));
         }
     }
 }

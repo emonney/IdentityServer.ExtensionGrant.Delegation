@@ -42,6 +42,7 @@ namespace IdentityServer.ExtensionGrant.Delegation
             var userToken = context.Request.Raw.Get("token");
             var provider = context.Request.Raw.Get("provider");
             var email = context.Request.Raw.Get("email");
+            var password = context.Request.Raw.Get("password");
 
             if (string.IsNullOrWhiteSpace(userToken))
             {
@@ -72,9 +73,9 @@ namespace IdentityServer.ExtensionGrant.Delegation
                 }
 
                 var providerUserId = result.Claims.FirstOrDefault(c => c.Type == "id")?.Value ?? result.Claims.FirstOrDefault(c => c.Type == "sub")?.Value;
-                var providerEmail = result.Claims.FirstOrDefault(c => c.Type == "email")?.Value ?? result.Claims.FirstOrDefault(c => c.Type == "emailAddress")?.Value;
+                email ??= result.Claims.FirstOrDefault(c => c.Type == "email")?.Value ?? result.Claims.FirstOrDefault(c => c.Type == "emailAddress")?.Value;
 
-                context.Result = await _validationService.GetValidationResultAsync(providerUserId, providerEmail, email, provider);
+                context.Result = await _validationService.GetValidationResultAsync(provider, providerUserId, email, password);
             }
             catch (Exception ex)
             {
