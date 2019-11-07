@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace IdentityServer.ExtensionGrant.Delegation
+namespace IdentityServer.ExtensionGrant.Delegation.Models
 {
     public static class GrantType
     {

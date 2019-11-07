@@ -3,7 +3,6 @@
 // www.ebenmonney.com/libraries
 // =============================
 
-using IdentityServer.ExtensionGrant.Delegation.Models;
 using IdentityServer.ExtensionGrant.Delegation.Services;
 using IdentityServer4.Models;
 using IdentityServer4.Validation;
@@ -17,19 +16,19 @@ using System.Threading.Tasks;
 
 namespace IdentityServer.ExtensionGrant.Delegation.TokenValidators
 {
-    public interface IGoogleTokenValidator : ITokenValidator
+    public interface IFacebookTokenValidator : ITokenValidator
     {
     }
 
 
-    public class GoogleTokenValidator : IGoogleTokenValidator
+    public class FacebookTokenValidator : IFacebookTokenValidator
     {
-        private const string userInfoEndpoint = "https://www.googleapis.com/oauth2/v2/userinfo?access_token={token}";
+        private const string userInfoEndpoint = "https://graph.facebook.com/v5.0/me?fields=id,email&access_token={token}";
         private const string tokenReplacement = "{token}";
 
         private readonly HttpClient _client;
 
-        public GoogleTokenValidator(HttpClient client)
+        public FacebookTokenValidator(HttpClient client)
         {
             _client = client;
         }

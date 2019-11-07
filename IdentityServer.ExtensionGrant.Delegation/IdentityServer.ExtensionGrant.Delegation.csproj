@@ -3,17 +3,17 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <Company>www.ebenmonney.com</Company>
-    <PackageTags>IdentityServer4 ExtensionGrant Delegation TokenExchange Google Facebook Twitter Social Login QuickApp</PackageTags>
+    <PackageTags>Google Facebook Twitter Social Login IdentityServer4 ExtensionGrant Delegation TokenExchange QuickApp</PackageTags>
     <RepositoryType>Git</RepositoryType>
     <PackageProjectUrl>https://ebenmonney.com</PackageProjectUrl>
     <Authors>Ebenezer Monney</Authors>
     <Product>QuickApp</Product>
-    <Version>1.0.0-alpha</Version>
+    <Version>1.0.1</Version>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/emonney/IdentityServer.ExtensionGrant.Delegation.git</RepositoryUrl>
     <Copyright>www.ebenmonney.com</Copyright>
     <PackageIconUrl>https://openid.net/images/logo/openid-icon-500x500.png</PackageIconUrl>
-    <Description>IdentityServer4 extension grant implementation to exchange external tokens for IdentityServer access tokens. Includes implementation for social logins such as google, facebook and twitter.</Description>
+    <Description>IdentityServer4 extension grant implementation to exchange external tokens for IdentityServer access tokens. Includes implementation for popular social logins such as google, facebook and twitter.</Description>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -22,10 +22,6 @@
 
   <ItemGroup>
     <PackageReference Include="IdentityServer4" Version="3.0.2" />
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.7">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
   </ItemGroup>
 
 </Project>

@@ -4,33 +4,134 @@
         <name>IdentityServer.ExtensionGrant.Delegation</name>
     </assembly>
     <members>
-        <member name="M:IdentityServer.ExtensionGrant.Delegation.GrantValidationService`2.CreateUserAsync(System.String,System.String)">
+        <member name="T:IdentityServer.ExtensionGrant.Delegation.Models.SocialLoginOptions">
             <summary>
-            Override this in your application and call Base.<see cref="M:IdentityServer.ExtensionGrant.Delegation.GrantValidationService`2.CreateUserAsync(System.String,System.String)" />(). Then set the necessary properties on the returned user object.
-            call base.CreateUserAsync then set user role, set IsEnabled to true, then send verification email
+            Provides programmatic configuration used by <see cref="T:IdentityServer.ExtensionGrant.Delegation.TokenValidators.TwitterTokenValidator"/>.
             </summary>
-            <param name="username">The username of the new user</param>
-            <param name="email">The email address of the new user</param>
-            <returns>The newly created user</returns>
         </member>
-        <member name="T:IdentityServer.ExtensionGrant.Delegation.TokenValidatorOptions">
+        <member name="P:IdentityServer.ExtensionGrant.Delegation.Models.SocialLoginOptions.TwitterConsumerAPIKey">
+            <summary>
+            Gets or sets the consumer key used to communicate with Twitter.
+            </summary>
+        </member>
+        <member name="P:IdentityServer.ExtensionGrant.Delegation.Models.SocialLoginOptions.TwitterConsumerSecret">
+            <summary>
+            Gets or sets the consumer secret used to sign requests to Twitter.
+            </summary>
+        </member>
+        <member name="T:IdentityServer.ExtensionGrant.Delegation.Models.TokenValidatorOptions">
             <summary>
             Provides programmatic configuration used by <see cref="T:IdentityServer4.Validation.IExtensionGrantValidator"/>.
             </summary>
         </member>
-        <member name="M:IdentityServer.ExtensionGrant.Delegation.TokenValidatorOptions.AddValidator``1(System.String)">
+        <member name="M:IdentityServer.ExtensionGrant.Delegation.Models.TokenValidatorOptions.AddValidator``1(System.String)">
             <summary>
             Add a token validator with the given provider.
             </summary>
             <typeparam name="T">The type for the token validator.</typeparam>
             <param name="provider">The token provider.</param>
         </member>
-        <member name="M:IdentityServer.ExtensionGrant.Delegation.TokenValidatorOptions.GetValidator(System.String)">
+        <member name="M:IdentityServer.ExtensionGrant.Delegation.Models.TokenValidatorOptions.GetValidator(System.String)">
             <summary>
             Returns the token validator for the specified provider, or null if a validator with the provider does not exist.
             </summary>
             <param name="provider">The provider name of the validator to return.</param>
             <returns>The validator type for the specified provider, or null if a validator with the provider name does not exist.</returns>
+        </member>
+        <member name="M:IdentityServer.ExtensionGrant.Delegation.Services.GrantValidationService`2.CreateUserAsync(System.String,System.String)">
+            <summary>
+            Override this in your application and call Base.<see cref="M:IdentityServer.ExtensionGrant.Delegation.Services.GrantValidationService`2.CreateUserAsync(System.String,System.String)" />. Then set the necessary properties on the returned user object.
+            E.g. Role, IsEnabled, send verification email, etc.
+            </summary>
+            <param name="username">The username of the new user</param>
+            <param name="email">The email address of the new user</param>
+            <returns>The newly created user</returns>
+        </member>
+        <member name="T:IdentityServer.ExtensionGrant.Delegation.Services.OAuth1Helper">
+            <summary>
+            A helper class to generate tokens for OAuth1 requests.
+            </summary>
+        </member>
+        <member name="F:IdentityServer.ExtensionGrant.Delegation.Services.OAuth1Helper.OAuthVersion1">
+            <summary>
+            OAuth version 1
+            </summary>
+        </member>
+        <member name="F:IdentityServer.ExtensionGrant.Delegation.Services.OAuth1Helper.OAuthSignatureMethod">
+            <summary>
+            The signature method used to sign the request. HMAC-SHA1.
+            </summary>
+        </member>
+        <member name="M:IdentityServer.ExtensionGrant.Delegation.Services.OAuth1Helper.GetNonce">
+            <summary>
+            Generates the nounce value unique to the request.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:IdentityServer.ExtensionGrant.Delegation.Services.OAuth1Helper.GetTimeStamp">
+            <summary>
+            Generates the timestamp for when the request was created.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:IdentityServer.ExtensionGrant.Delegation.Services.OAuth1Helper.GetMediaTypeHeader">
+            <summary>
+            Gets a new media type header for OAuth1 requests.
+            </summary>
+            <returns>An 'application/x-www-form-urlencoded' request header.</returns>
+        </member>
+        <member name="M:IdentityServer.ExtensionGrant.Delegation.Services.OAuth1Helper.GetResponseValues(System.String)">
+            <summary>
+            Splits a response string into a Dictionary of name/value pairs.
+            </summary>
+            <param name="responseString">The response string containing tokens such as accessTokens, oauthTokens, oauthTokenSecrets, etc.</param>
+            <returns>A dictionary of name/value pairs of the data in the response string.</returns>
+        </member>
+        <member name="M:IdentityServer.ExtensionGrant.Delegation.Services.OAuth1Helper.GetSignature(System.Uri,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Generates an OAuth 1.0a HMAC-SHA1 signature for an HTTP request.
+            </summary>
+            <param name="requestUrl">The full URL to which the requst is directed. Required.</param>
+            <param name="httpMethod">The request method. E.g. GET or POST. Required.</param>
+            <param name="consumerKey">The client key/id that identifies the application making the request. Required.</param>
+            <param name="consumerSecret">The client secret/password that identifies the application making the request.</param>
+            <param name="oauthToken">The token value/id used to identify the account/resource owner the request is acting on.</param>
+            <param name="oauthTokenSecret">The token secret/password used to identify the account/resource owner the request is acting on.</param>
+            <param name="oauthCallback">The url the user is directed to after a successful authorisation.</param>
+            <returns></returns>
+        </member>
+        <member name="M:IdentityServer.ExtensionGrant.Delegation.Services.OAuth1Helper.GetAuthorizationHeader(System.Uri,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Generates an authorization header for the given request parameters.
+            </summary>
+            <param name="requestUrl">The full URL to which the requst is directed. Required.</param>
+            <param name="httpMethod">The request method. E.g. GET or POST. Required.</param>
+            <param name="consumerKey">The client key/id that identifies the application making the request. Required.</param>
+            <param name="consumerSecret">The client secret/password that identifies the application making the request.</param>
+            <param name="oauthToken">The token value/id used to identify the account/resource owner the request is acting on.</param>
+            <param name="oauthTokenSecret">The token secret/password used to identify the account/resource owner the request is acting on.</param>
+            <param name="oauthCallback">The url the user is directed to after a successful authorisation.</param>
+            <returns></returns>
+        </member>
+        <member name="M:IdentityServer.ExtensionGrant.Delegation.Services.OAuth1Helper.GetAuthorizationHeader(System.String,System.String,System.String,System.String)">
+            <summary>
+            Generates an authorization header for the given request parameters.
+            </summary>
+            <param name="signature">The OAuth signature for the request. Required.</param>
+            <param name="consumerKey">The client key/id that identifies the application making the request. Required.</param>
+            <param name="oauthToken">The token value/id used to identify the account/resource owner the request is acting on.</param>
+            <param name="oauthCallback">The url the user is directed to after a successful authorisation.</param>
+            <returns></returns>
+        </member>
+        <member name="M:IdentityServer.ExtensionGrant.Delegation.TokenValidators.FacebookTokenValidator.ValidateIdentityTokenAsync(System.String,System.String,System.Boolean)">
+            <summary>
+            Not implemented. Use <see cref="M:IdentityServer.ExtensionGrant.Delegation.TokenValidators.FacebookTokenValidator.ValidateAccessTokenAsync(System.String,System.String)" />. 
+            </summary>
+        </member>
+        <member name="M:IdentityServer.ExtensionGrant.Delegation.TokenValidators.FacebookTokenValidator.ValidateRefreshTokenAsync(System.String,IdentityServer4.Models.Client)">
+            <summary>
+            Not implemented. Use <see cref="M:IdentityServer.ExtensionGrant.Delegation.TokenValidators.FacebookTokenValidator.ValidateAccessTokenAsync(System.String,System.String)" />. 
+            </summary>
         </member>
         <member name="M:IdentityServer.ExtensionGrant.Delegation.TokenValidators.GoogleTokenValidator.ValidateIdentityTokenAsync(System.String,System.String,System.Boolean)">
             <summary>
@@ -40,6 +141,16 @@
         <member name="M:IdentityServer.ExtensionGrant.Delegation.TokenValidators.GoogleTokenValidator.ValidateRefreshTokenAsync(System.String,IdentityServer4.Models.Client)">
             <summary>
             Not implemented. Use <see cref="M:IdentityServer.ExtensionGrant.Delegation.TokenValidators.GoogleTokenValidator.ValidateAccessTokenAsync(System.String,System.String)" />. 
+            </summary>
+        </member>
+        <member name="M:IdentityServer.ExtensionGrant.Delegation.TokenValidators.TwitterTokenValidator.ValidateIdentityTokenAsync(System.String,System.String,System.Boolean)">
+            <summary>
+            Not implemented. Use <see cref="M:IdentityServer.ExtensionGrant.Delegation.TokenValidators.TwitterTokenValidator.ValidateAccessTokenAsync(System.String,System.String)" />. 
+            </summary>
+        </member>
+        <member name="M:IdentityServer.ExtensionGrant.Delegation.TokenValidators.TwitterTokenValidator.ValidateRefreshTokenAsync(System.String,IdentityServer4.Models.Client)">
+            <summary>
+            Not implemented. Use <see cref="M:IdentityServer.ExtensionGrant.Delegation.TokenValidators.TwitterTokenValidator.ValidateAccessTokenAsync(System.String,System.String)" />. 
             </summary>
         </member>
         <member name="T:Microsoft.Extensions.DependencyInjection.ServiceExtensions">
@@ -56,19 +167,19 @@
             <param name="services">The <see cref="T:Microsoft.Extensions.DependencyInjection.IIdentityServerBuilder" /> to add services to.</param>
             <returns>The <see cref="T:Microsoft.Extensions.DependencyInjection.IIdentityServerBuilder"/> so that additional calls can be chained.</returns>
         </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.ServiceExtensions.AddDefaultSocialLoginValidators(Microsoft.Extensions.DependencyInjection.IIdentityServerBuilder)">
+        <member name="M:Microsoft.Extensions.DependencyInjection.ServiceExtensions.AddDefaultSocialLoginValidators(Microsoft.Extensions.DependencyInjection.IIdentityServerBuilder,System.Action{IdentityServer.ExtensionGrant.Delegation.Models.SocialLoginOptions})">
             <summary>
             Configures Google, Facebook and Twitter token validators with the <see cref="T:IdentityServer.ExtensionGrant.Delegation.DelegationGrantValidator" />. 
             </summary>
             <param name="services">The <see cref="T:Microsoft.Extensions.DependencyInjection.IIdentityServerBuilder" /> to add services to.</param>
             <returns>The <see cref="T:Microsoft.Extensions.DependencyInjection.IIdentityServerBuilder"/> so that additional calls can be chained.</returns>
         </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.ServiceExtensions.AddTokenValidators(Microsoft.Extensions.DependencyInjection.IIdentityServerBuilder,System.Action{IdentityServer.ExtensionGrant.Delegation.TokenValidatorOptions})">
+        <member name="M:Microsoft.Extensions.DependencyInjection.ServiceExtensions.AddTokenValidators(Microsoft.Extensions.DependencyInjection.IIdentityServerBuilder,System.Action{IdentityServer.ExtensionGrant.Delegation.Models.TokenValidatorOptions})">
             <summary>
             Adds custom token validators to the <see cref="T:IdentityServer.ExtensionGrant.Delegation.DelegationGrantValidator" />. 
             </summary>
             <param name="services">The <see cref="T:Microsoft.Extensions.DependencyInjection.IIdentityServerBuilder" /> to add services to.</param>
-            <param name="configure">An action delegate to configure the provided <see cref="T:IdentityServer.ExtensionGrant.Delegation.TokenValidatorOptions"/>.</param>
+            <param name="configure">An action delegate to configure the provided <see cref="T:IdentityServer.ExtensionGrant.Delegation.Models.TokenValidatorOptions"/>.</param>
             <returns>The <see cref="T:Microsoft.Extensions.DependencyInjection.IIdentityServerBuilder"/> so that additional calls can be chained.</returns>
         </member>
     </members>

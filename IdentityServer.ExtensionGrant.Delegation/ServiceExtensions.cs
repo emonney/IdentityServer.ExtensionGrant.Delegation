@@ -7,9 +7,10 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using IdentityServer.ExtensionGrant.Delegation;
+using IdentityServer.ExtensionGrant.Delegation.Models;
+using IdentityServer.ExtensionGrant.Delegation.Services;
 using IdentityServer.ExtensionGrant.Delegation.TokenValidators;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -40,20 +41,24 @@ namespace Microsoft.Extensions.DependencyInjection
         /// </summary>
         /// <param name="services">The <see cref="IIdentityServerBuilder" /> to add services to.</param>
         /// <returns>The <see cref="IIdentityServerBuilder"/> so that additional calls can be chained.</returns>
-        public static IIdentityServerBuilder AddDefaultSocialLoginValidators(this IIdentityServerBuilder services)
+        public static IIdentityServerBuilder AddDefaultSocialLoginValidators(this IIdentityServerBuilder services, Action<SocialLoginOptions> configure = null)
         {
             if (services == null)
                 throw new ArgumentNullException(nameof(services));
 
+            if (configure != null)
+                services.Services.Configure(configure);
+
             services.Services.AddHttpClient<IGoogleTokenValidator, GoogleTokenValidator>();
-            //services.Services.AddHttpClient<IFacebookTokenValidator, FacebookTokenValidator>();
-            //services.Services.AddHttpClient<ITwitterTokenValidator, TwitterTokenValidator>();
+            services.Services.AddHttpClient<IFacebookTokenValidator, FacebookTokenValidator>();
+            services.Services.AddHttpClient<ITwitterTokenValidator, TwitterTokenValidator>();
+            services.Services.AddTransient<OAuth1Helper>();
 
             services.AddTokenValidators(options =>
             {
                 options.AddValidator<IGoogleTokenValidator>(DefaultTokenProviders.Google);
-                //options.AddValidator<IFacebookTokenValidator>(DefaultTokenProviders.Facebook);
-                //options.AddValidator<ITwitterTokenValidator>(DefaultTokenProviders.Twitter);
+                options.AddValidator<IFacebookTokenValidator>(DefaultTokenProviders.Facebook);
+                options.AddValidator<ITwitterTokenValidator>(DefaultTokenProviders.Twitter);
             });
 
             return services;

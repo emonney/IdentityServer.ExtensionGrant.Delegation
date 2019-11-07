@@ -12,11 +12,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IdentityServer.ExtensionGrant.Delegation
+namespace IdentityServer.ExtensionGrant.Delegation.Services
 {
     public interface IGrantValidationService
     {
-        public Task<GrantValidationResult> GetValidationResultAsync(string providerUserId, string provider, string email, string password = null);
+        public Task<GrantValidationResult> GetValidationResultAsync(string provider, string providerUserId, string email, string password = null);
     }
 
 
@@ -86,8 +86,8 @@ namespace IdentityServer.ExtensionGrant.Delegation
         }
 
         /// <summary>
-        /// Override this in your application and call Base.<see cref="CreateUserAsync" />(). Then set the necessary properties on the returned user object.
-        /// E.g. Call base.CreateUserAsync then set user role, IsEnabled to true, send verification email, etc.
+        /// Override this in your application and call Base.<see cref="CreateUserAsync" />. Then set the necessary properties on the returned user object.
+        /// E.g. Role, IsEnabled, send verification email, etc.
         /// </summary>
         /// <param name="username">The username of the new user</param>
         /// <param name="email">The email address of the new user</param>

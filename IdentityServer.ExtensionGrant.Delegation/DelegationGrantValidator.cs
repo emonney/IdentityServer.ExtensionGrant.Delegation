@@ -3,13 +3,15 @@
 // www.ebenmonney.com/libraries
 // =============================
 
+using IdentityServer.ExtensionGrant.Delegation.Models;
+using IdentityServer.ExtensionGrant.Delegation.Services;
 using IdentityServer4.Models;
 using IdentityServer4.Validation;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using ExtensionGrantModels = IdentityServer.ExtensionGrant.Delegation.Models;
 
 namespace IdentityServer.ExtensionGrant.Delegation
 {
@@ -19,21 +21,15 @@ namespace IdentityServer.ExtensionGrant.Delegation
         private readonly IGrantValidationService _validationService;
         private readonly TokenValidatorOptions _options;
 
-        public string GrantType => Delegation.GrantType.Delegation;
+        public string GrantType => ExtensionGrantModels.GrantType.Delegation;
 
         public DelegationGrantValidator(IServiceProvider services, IGrantValidationService validationService, IOptions<TokenValidatorOptions> options)
         {
-            if (services == null)
-                throw new ArgumentNullException(nameof(services));
-
-            if (validationService == null)
-                throw new ArgumentNullException(nameof(validationService));
-
             if (options == null)
                 throw new ArgumentNullException(nameof(options));
 
-            _services = services;
-            _validationService = validationService;
+            _services = services ?? throw new ArgumentNullException(nameof(services));
+            _validationService = validationService ?? throw new ArgumentNullException(nameof(validationService));
             _options = options.Value;
         }
 
@@ -56,8 +52,8 @@ namespace IdentityServer.ExtensionGrant.Delegation
                 return;
             }
 
-            ITokenValidator validator = _services.GetService(_options.GetValidator(provider)) as ITokenValidator;
-            if (validator == null)
+            var validatorType = _options.GetValidator(provider);
+            if (validatorType == null || !(_services.GetService(validatorType) is ITokenValidator validator))
             {
                 context.Result = new GrantValidationResult(TokenRequestErrors.InvalidGrant, errorDescription: "Unsupported provider");
                 return;

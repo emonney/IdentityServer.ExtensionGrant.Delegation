@@ -7,7 +7,7 @@ using IdentityServer4.Validation;
 using System;
 using System.Collections.Generic;
 
-namespace IdentityServer.ExtensionGrant.Delegation
+namespace IdentityServer.ExtensionGrant.Delegation.Models
 {
     /// <summary>
     /// Provides programmatic configuration used by <see cref="IExtensionGrantValidator"/>.

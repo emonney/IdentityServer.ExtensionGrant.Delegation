@@ -7,6 +7,7 @@ using IdentityServer.ExtensionGrant.Delegation.Models;
 using IdentityServer.ExtensionGrant.Delegation.Services;
 using IdentityServer4.Models;
 using IdentityServer4.Validation;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,30 +18,45 @@ using System.Threading.Tasks;
 
 namespace IdentityServer.ExtensionGrant.Delegation.TokenValidators
 {
-    public interface IGoogleTokenValidator : ITokenValidator
+    public interface ITwitterTokenValidator : ITokenValidator
     {
     }
 
 
-    public class GoogleTokenValidator : IGoogleTokenValidator
+    public class TwitterTokenValidator : ITwitterTokenValidator
     {
-        private const string userInfoEndpoint = "https://www.googleapis.com/oauth2/v2/userinfo?access_token={token}";
-        private const string tokenReplacement = "{token}";
+        private const string userInfoEndpoint =
+            "https://api.twitter.com/1.1/account/verify_credentials.json?include_email=true&include_entities=false&skip_status=true";
 
         private readonly HttpClient _client;
+        private readonly OAuth1Helper _oauthHelper;
+        private readonly SocialLoginOptions _options;
 
-        public GoogleTokenValidator(HttpClient client)
+
+        public TwitterTokenValidator(HttpClient client, OAuth1Helper oauthHelper, IOptions<SocialLoginOptions> options)
         {
-            _client = client;
+            if (options is null)
+                throw new ArgumentNullException(nameof(options));
+
+            _client = client ?? throw new ArgumentNullException(nameof(client));
+            _oauthHelper = oauthHelper ?? throw new ArgumentNullException(nameof(oauthHelper));
+            _options = options.Value;
         }
 
         public async Task<TokenValidationResult> ValidateAccessTokenAsync(string token, string expectedScope = null)
         {
+            Uri endpoint = new Uri(userInfoEndpoint);
             var tokenValues = OAuth1Helper.GetResponseValues(token);
-            tokenValues.TryGetValue("access_token", out string accessToken);
-            token = accessToken ?? token;
 
-            var endpoint = userInfoEndpoint.Replace(tokenReplacement, token);
+            tokenValues.TryGetValue("oauth_token", out string oauthToken);
+            tokenValues.TryGetValue("oauth_token_secret", out string oauthTokenSecret);
+
+            string authorizationHeader = _oauthHelper.GetAuthorizationHeader(
+                endpoint, "GET", _options.TwitterConsumerAPIKey, _options.TwitterConsumerSecret, oauthToken, oauthTokenSecret, null);
+
+            _client.DefaultRequestHeaders.Clear();
+            _client.DefaultRequestHeaders.Accept.Add(OAuth1Helper.GetMediaTypeHeader());
+            _client.DefaultRequestHeaders.Add("Authorization", authorizationHeader);
 
             var response = await _client.GetAsync(endpoint);
             if (response.IsSuccessStatusCode)
