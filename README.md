@@ -5,7 +5,7 @@
 
 An IdentityServer4 NuGet library that adds support for validating and exchanging tokens from 3rd party OAuth providers for IdentityServer access tokens using delegation.
 
-This package simplifies the process of adding login support from third party providers to your applications. By simply exchanging tokens from these external providers for IdentityServer access token, the entire login flow can be handled by your application’s UI (e.g. SPAs) which eliminates the need to redirect to an IdentityServer page for login.
+This package simplifies the process of adding login support from third party providers to your applications. By simply exchanging tokens from these external providers for IdentityServer access token, the entire login flow can be handled by your application's UI (e.g. SPAs) which eliminates the need to redirect to an IdentityServer page for login.
 
 See the [documentation](http://docs.identityserver.io/en/latest/topics/extension_grants.html).
 
@@ -31,11 +31,11 @@ Configure in Startup:
            .AddDefaultSocialLoginValidators(); // Add google, facebook, twitter login support
 ```
 
-The default Google and Facebook implementation uses OAuth2 with the implicit flow for simplicity. This involes redirectin the user agent to the Provider's page and obtaining an access token from the provider. This access token is then exchanged for an IdentityServer access token using this library.  
+Google and Facebook uses OAuth2 or some close variation of it. In the simplest form you can implement an implicit flow, which involves redirecting the user agent to the Provider's page and obtaining an access token from the provider. This access token is then exchanged for an IdentityServer access token using this library.  
 
 Twitter however uses OAuth1 for login which involves a [3-step process](https://developer.twitter.com/en/docs/twitter-for-websites/log-in-with-twitter/guides/implementing-sign-in-with-twitter) to obtain an access token.  
 This library provides you with the `OAuth1Helper` utility class which you can use to independently generate the necessary tokens and signature for this process.  
-It also provides you with a convenience method `GetAuthorizationHeader(...)` to generate the Authorization header for your requests. Simply pass in the needed tokens depending on which stage you're in the login process.
+It also provides you with a convenience method `GetAuthorizationHeader(...)` to generate the Authorization header for your requests. Simply pass in the needed tokens depending on which stage you're on in the login process.
 Once the final access token is obtained use this library to exchange it for an IdentityServer access token.  
 The configuration above should be modified to include the twitter `ConsumerAPIKey` and `ConsumerSecret` if you wish to use twitter login.
 ```csharp
@@ -51,7 +51,7 @@ The configuration above should be modified to include the twitter `ConsumerAPIKe
 
 ## Customizing
 
-1. To support additional providers simply provide an implementation for `ITokenValidator` and add to DI. The example below adds 3 additional custom providers to the registration
+1. To support additional providers you provide an implementation for `ITokenValidator` and add to DI. The example below adds 3 additional custom providers to the registration
 
     ```csharp
                /** Other IdentityServer Configurations here **/
@@ -66,13 +66,13 @@ The configuration above should be modified to include the twitter `ConsumerAPIKe
     See the file [GoogleTokenValidator.cs](https://github.com/emonney/IdentityServer.ExtensionGrant.Delegation/blob/master/IdentityServer.ExtensionGrant.Delegation/TokenValidators/GoogleTokenValidator.cs) for an example of an `ITokenValidator` implementation.
 
 2. Optionally to customize how a new user is created, inherit from `GrantValidationService` and override the `CreateUserAsync` method to configure or set properties on the newly created user.  
-Don’t forget to register your new implementation with DI:
+Don't forget to register your new implementation with DI:
     ```csharp
     services.AddScoped<IGrantValidationService, CustomGrantValidationService>();
     ```
 
 ## Usage
-1. The client signs in with the external OAuth provider (e.g. facebook, google, etc using the provider's recommened approach) and obtains an id/access token.
+1. The client signs in with the external OAuth provider (e.g. facebook, google, etc. using the provider's recommended approach) and obtains an id/access token.
 2. With the token from the OAuth provider make a call to IdentityServer to validate and exchange the external token with an IdentityServer AccessToken with which you can make API calls.  
 The call to exchange tokens could look like this:
     ```
@@ -95,6 +95,10 @@ The call to exchange tokens could look like this:
 
     **Note**: If an email field is not included, it is automatically retrieved using the external token. In this case the external token must have the email scope.
 3. If the user exist IdentityServer returns the access token, if not a new user is automatically registered and an access token is returned for that user.
+
+## Help and Support
+*	For help post your questions in the [support forum](https://www.ebenmonney.com/forum/forum/programming-support)
+*	For bug reports open a [github issue](https://github.com/emonney/IdentityServer.ExtensionGrant.Delegation/issues)
 
 ## License
  [MIT](https://github.com/emonney/IdentityServer.ExtensionGrant.Delegation/blob/master/LICENSE)
