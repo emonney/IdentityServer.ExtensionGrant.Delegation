@@ -7,11 +7,7 @@ An IdentityServer4 NuGet library that adds support for validating and exchanging
 
 This package simplifies the process of adding login support from third party providers to your applications. By simply exchanging tokens from these external providers for IdentityServer access token, the entire login flow can be handled by your application’s UI (e.g. SPAs) which eliminates the need to redirect to an IdentityServer page for login.
 
-See the [documentation](http://docs.identityserver.io/en/latest/topics/extension_grants.html).  
-<!---
-See the [documentation](https://www.ebenmonney.com/IdentityServer.ExtensionGrant.Delegation).  
-See also http://docs.identityserver.io/en/latest/topics/extension_grants.html for more on extension grants
--->
+See the [documentation](http://docs.identityserver.io/en/latest/topics/extension_grants.html).
 
 **If you find this library useful, please take a minute to STAR it. Appreciated!**
 
