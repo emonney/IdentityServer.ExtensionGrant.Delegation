@@ -27,7 +27,7 @@ Configure in Startup:
 ```csharp
    services.AddIdentityServer()
            /** Other IdentityServer Configurations here **/
-           .AddDelegationGrant<IdentityUser, String>()   // Register the extension grant 
+           .AddDelegationGrant<IdentityUser, String>() // Register the extension grant 
            .AddDefaultSocialLoginValidators(); // Add google, facebook, twitter login support
 ```
 
@@ -41,8 +41,8 @@ The configuration above should be modified to include the twitter `ConsumerAPIKe
 ```csharp
    services.AddIdentityServer()
            /** Other IdentityServer Configurations here **/
-           .AddDelegationGrant<IdentityUser, String>()   // Register the extension grant 
-           .AddDefaultSocialLoginValidators(options =>   // Add google, facebook, twitter login support
+           .AddDelegationGrant<IdentityUser, String>() // Register the extension grant 
+           .AddDefaultSocialLoginValidators(options => // Add google, facebook, twitter login support
            {
                options.TwitterConsumerAPIKey = Configuration["Twitter:ConsumerAPIKey"];
                options.TwitterConsumerSecret = Configuration["Twitter:ConsumerSecret"];

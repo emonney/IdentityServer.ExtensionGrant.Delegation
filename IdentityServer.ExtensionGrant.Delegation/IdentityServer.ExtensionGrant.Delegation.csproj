@@ -3,23 +3,38 @@
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <Company>www.ebenmonney.com</Company>
-    <PackageTags>Google Facebook Twitter Social Login IdentityServer ExtensionGrant Delegation TokenExchange QuickApp</PackageTags>
-    <RepositoryType>Git</RepositoryType>
-    <PackageProjectUrl>https://ebenmonney.com</PackageProjectUrl>
     <Authors>Ebenezer Monney</Authors>
     <Product>QuickApp</Product>
-    <Version>2.0.0</Version>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <RepositoryUrl>https://github.com/emonney/IdentityServer.ExtensionGrant.Delegation.git</RepositoryUrl>
-    <Copyright>www.ebenmonney.com</Copyright>
-    <PackageIconUrl>https://openid.net/images/logo/openid-icon-500x500.png</PackageIconUrl>
     <Description>IdentityServer extension grant implementation to exchange external tokens for IdentityServer access tokens. Includes implementation for popular social logins such as google, facebook and twitter.</Description>
+    <Version>2.0.0</Version>
+    <Copyright>www.ebenmonney.com</Copyright>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/emonney/IdentityServer.ExtensionGrant.Delegation.git</RepositoryUrl>
+    <RepositoryBranch>master</RepositoryBranch>
+    <RepositoryCommit>24980c6c3efeb2c61e4ce047ec040180e546438f</RepositoryCommit>
+    <PackageIcon>packageIcon.png</PackageIcon>
+    <PackageIconUrl>https://openid.net/images/logo/openid-icon-500x500.png</PackageIconUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageProjectUrl>https://www.ebenmonney.com/IdentityServer.ExtensionGrant.Delegation</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageTags>Google Facebook Twitter Social Login IdentityServer ExtensionGrant Delegation TokenExchange QuickApp</PackageTags>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <DocumentationFile>IdentityServer.ExtensionGrant.Delegation.xml</DocumentationFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\packageIcon.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
   
   <ItemGroup>
     <PackageReference Include="Duende.IdentityServer" Version="6.2.0" />
