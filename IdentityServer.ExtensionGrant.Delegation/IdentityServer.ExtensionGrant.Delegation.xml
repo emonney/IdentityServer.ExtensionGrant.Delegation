@@ -21,7 +21,7 @@
         </member>
         <member name="T:IdentityServer.ExtensionGrant.Delegation.Models.TokenValidatorOptions">
             <summary>
-            Provides programmatic configuration used by <see cref="T:IdentityServer4.Validation.IExtensionGrantValidator"/>.
+            Provides programmatic configuration used by <see cref="T:Duende.IdentityServer.Validation.IExtensionGrantValidator"/>.
             </summary>
         </member>
         <member name="M:IdentityServer.ExtensionGrant.Delegation.Models.TokenValidatorOptions.AddValidator``1(System.String)">
@@ -128,7 +128,7 @@
             Not implemented. Use <see cref="M:IdentityServer.ExtensionGrant.Delegation.TokenValidators.FacebookTokenValidator.ValidateAccessTokenAsync(System.String,System.String)" />. 
             </summary>
         </member>
-        <member name="M:IdentityServer.ExtensionGrant.Delegation.TokenValidators.FacebookTokenValidator.ValidateRefreshTokenAsync(System.String,IdentityServer4.Models.Client)">
+        <member name="M:IdentityServer.ExtensionGrant.Delegation.TokenValidators.FacebookTokenValidator.ValidateRefreshTokenAsync(System.String,Duende.IdentityServer.Models.Client)">
             <summary>
             Not implemented. Use <see cref="M:IdentityServer.ExtensionGrant.Delegation.TokenValidators.FacebookTokenValidator.ValidateAccessTokenAsync(System.String,System.String)" />. 
             </summary>
@@ -138,7 +138,7 @@
             Not implemented. Use <see cref="M:IdentityServer.ExtensionGrant.Delegation.TokenValidators.GoogleTokenValidator.ValidateAccessTokenAsync(System.String,System.String)" />. 
             </summary>
         </member>
-        <member name="M:IdentityServer.ExtensionGrant.Delegation.TokenValidators.GoogleTokenValidator.ValidateRefreshTokenAsync(System.String,IdentityServer4.Models.Client)">
+        <member name="M:IdentityServer.ExtensionGrant.Delegation.TokenValidators.GoogleTokenValidator.ValidateRefreshTokenAsync(System.String,Duende.IdentityServer.Models.Client)">
             <summary>
             Not implemented. Use <see cref="M:IdentityServer.ExtensionGrant.Delegation.TokenValidators.GoogleTokenValidator.ValidateAccessTokenAsync(System.String,System.String)" />. 
             </summary>
@@ -148,7 +148,7 @@
             Not implemented. Use <see cref="M:IdentityServer.ExtensionGrant.Delegation.TokenValidators.TwitterTokenValidator.ValidateAccessTokenAsync(System.String,System.String)" />. 
             </summary>
         </member>
-        <member name="M:IdentityServer.ExtensionGrant.Delegation.TokenValidators.TwitterTokenValidator.ValidateRefreshTokenAsync(System.String,IdentityServer4.Models.Client)">
+        <member name="M:IdentityServer.ExtensionGrant.Delegation.TokenValidators.TwitterTokenValidator.ValidateRefreshTokenAsync(System.String,Duende.IdentityServer.Models.Client)">
             <summary>
             Not implemented. Use <see cref="M:IdentityServer.ExtensionGrant.Delegation.TokenValidators.TwitterTokenValidator.ValidateAccessTokenAsync(System.String,System.String)" />. 
             </summary>

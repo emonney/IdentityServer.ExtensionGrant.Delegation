@@ -3,11 +3,11 @@
 [![NuGet Downloads](https://img.shields.io/nuget/dt/IdentityServer.ExtensionGrant.Delegation)](https://www.nuget.org/packages/IdentityServer.ExtensionGrant.Delegation)
 [![Twitter Follow](https://img.shields.io/twitter/follow/kommand?style=social)](https://twitter.com/kommand)
 
-An IdentityServer4 NuGet library that adds support for validating and exchanging tokens from 3rd party OAuth providers for IdentityServer access tokens using delegation.
+An IdentityServer NuGet library that adds support for validating and exchanging tokens from 3rd party OAuth providers for IdentityServer access tokens using delegation.
 
 This package simplifies the process of adding login support from third party providers to your applications. By simply exchanging tokens from these external providers for IdentityServer access token, the entire login flow can be handled by your application's UI (e.g. SPAs) which eliminates the need to redirect to an IdentityServer page for login.
 
-See the [documentation](http://docs.identityserver.io/en/latest/topics/extension_grants.html).
+See the [documentation](https://docs.duendesoftware.com/identityserver/v6/tokens/extension_grants).
 
 **If you find this library useful, please take a minute to STAR it. Appreciated!**
 

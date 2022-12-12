@@ -1,27 +1,28 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <Company>www.ebenmonney.com</Company>
-    <PackageTags>Google Facebook Twitter Social Login IdentityServer4 ExtensionGrant Delegation TokenExchange QuickApp</PackageTags>
+    <PackageTags>Google Facebook Twitter Social Login IdentityServer ExtensionGrant Delegation TokenExchange QuickApp</PackageTags>
     <RepositoryType>Git</RepositoryType>
     <PackageProjectUrl>https://ebenmonney.com</PackageProjectUrl>
     <Authors>Ebenezer Monney</Authors>
     <Product>QuickApp</Product>
-    <Version>1.0.1</Version>
+    <Version>2.0.0</Version>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/emonney/IdentityServer.ExtensionGrant.Delegation.git</RepositoryUrl>
     <Copyright>www.ebenmonney.com</Copyright>
     <PackageIconUrl>https://openid.net/images/logo/openid-icon-500x500.png</PackageIconUrl>
-    <Description>IdentityServer4 extension grant implementation to exchange external tokens for IdentityServer access tokens. Includes implementation for popular social logins such as google, facebook and twitter.</Description>
+    <Description>IdentityServer extension grant implementation to exchange external tokens for IdentityServer access tokens. Includes implementation for popular social logins such as google, facebook and twitter.</Description>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>C:\Users\Ebenezer\Documents\GIT Projects\IdentityServer.ExtensionGrant.Delegation\IdentityServer.ExtensionGrant.Delegation\IdentityServer.ExtensionGrant.Delegation.xml</DocumentationFile>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <DocumentationFile>IdentityServer.ExtensionGrant.Delegation.xml</DocumentationFile>
   </PropertyGroup>
-
+  
   <ItemGroup>
-    <PackageReference Include="IdentityServer4" Version="3.0.2" />
+    <PackageReference Include="Duende.IdentityServer" Version="6.2.0" />
   </ItemGroup>
 
 </Project>
