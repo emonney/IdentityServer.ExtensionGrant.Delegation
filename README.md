@@ -20,7 +20,7 @@ PM> Install-Package IdentityServer.ExtensionGrant.Delegation
 
 ## Setup
 
-This package includes implementation for popular social logins such as **Google**, **Facebook**, **Twitter** and **Microsoft** and is designed to be easily extensible to support other providers (e.g. Microsoft, GitHub, LinkedIn, etc.) or an in-house identity provider.  
+This package includes implementation for popular social logins such as **Google**, **Facebook**, **Twitter** and **Microsoft** and is designed to be easily extensible to support other providers (e.g. GitHub, LinkedIn, etc.) or an in-house identity provider.  
 See section on [Customizing](#customizing) on how to add additional providers.
 
 Configure in Startup:

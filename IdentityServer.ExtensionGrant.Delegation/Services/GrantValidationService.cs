@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,7 +17,7 @@ namespace IdentityServer.ExtensionGrant.Delegation.Services
 {
     public interface IGrantValidationService
     {
-        public Task<GrantValidationResult> GetValidationResultAsync(string provider, string providerUserId, string email, string password = null);
+        public Task<GrantValidationResult> GetValidationResultAsync(string provider, string providerUserId, string email, string password = null, IEnumerable<Claim> claims = null);
     }
 
 
@@ -31,7 +32,7 @@ namespace IdentityServer.ExtensionGrant.Delegation.Services
             _userManager = userManager;
         }
 
-        public async Task<GrantValidationResult> GetValidationResultAsync(string provider, string providerUserId, string email, string password = null)
+        public async Task<GrantValidationResult> GetValidationResultAsync(string provider, string providerUserId, string email, string password = null, IEnumerable<Claim> claims = null)
         {
             if (provider == null)
                 throw new ArgumentNullException(provider);
@@ -43,7 +44,6 @@ namespace IdentityServer.ExtensionGrant.Delegation.Services
 
             if (user != null)
             {
-                var claims = await _userManager.GetClaimsAsync(user);
                 return new GrantValidationResult(user.Id.ToString(), provider, claims, provider, null);
             }
             else if (!string.IsNullOrWhiteSpace(email))
@@ -59,7 +59,7 @@ namespace IdentityServer.ExtensionGrant.Delegation.Services
                     }
                     else if (!await _userManager.CheckPasswordAsync(user, password))
                     {
-                        if (!_userManager.SupportsUserLockout)
+                        if (_userManager.SupportsUserLockout)
                             await _userManager.AccessFailedAsync(user);
 
                         return new GrantValidationResult(TokenRequestErrors.InvalidGrant, "invalid_username_or_password");
@@ -73,7 +73,6 @@ namespace IdentityServer.ExtensionGrant.Delegation.Services
                 var result = await _userManager.AddLoginAsync(user, new UserLoginInfo(provider, providerUserId, provider));
                 if (result.Succeeded)
                 {
-                    var claims = await _userManager.GetClaimsAsync(user);
                     return new GrantValidationResult(user.Id.ToString(), provider, claims, provider, null);
                 }
                 else

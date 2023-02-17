@@ -69,9 +69,9 @@ namespace IdentityServer.ExtensionGrant.Delegation
                 }
 
                 var providerUserId = result.Claims.FirstOrDefault(c => c.Type == "id")?.Value ?? result.Claims.FirstOrDefault(c => c.Type == "sub")?.Value;
-                email ??= result.Claims.FirstOrDefault(c => c.Type == "email")?.Value ?? result.Claims.FirstOrDefault(c => c.Type == "emailAddress")?.Value;
+                email = result.Claims.FirstOrDefault(c => c.Type == "email")?.Value ?? result.Claims.FirstOrDefault(c => c.Type == "emailAddress")?.Value ?? email;
 
-                context.Result = await _validationService.GetValidationResultAsync(provider, providerUserId, email, password);
+                context.Result = await _validationService.GetValidationResultAsync(provider, providerUserId, email, password, result.Claims);
             }
             catch (Exception ex)
             {

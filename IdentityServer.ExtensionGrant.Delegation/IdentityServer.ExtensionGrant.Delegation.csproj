@@ -11,7 +11,7 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/emonney/IdentityServer.ExtensionGrant.Delegation.git</RepositoryUrl>
     <RepositoryBranch>master</RepositoryBranch>
-    <RepositoryCommit>30c955fed37f845ca8b2f2e102a7351c6b1a42fc</RepositoryCommit>
+    <RepositoryCommit>996293c20dd7b049834bc6ea0961416be36f92aa</RepositoryCommit>
     <PackageIcon>packageIcon.png</PackageIcon>
     <PackageIconUrl>https://openid.net/images/logo/openid-icon-500x500.png</PackageIconUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
