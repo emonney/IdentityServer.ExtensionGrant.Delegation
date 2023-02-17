@@ -16,19 +16,18 @@ using System.Threading.Tasks;
 
 namespace IdentityServer.ExtensionGrant.Delegation.TokenValidators
 {
-    public interface IGoogleTokenValidator : ITokenValidator
+    public interface IMicrosoftTokenValidator : ITokenValidator
     {
     }
 
 
-    public class GoogleTokenValidator : IGoogleTokenValidator
+    public class MicrosoftTokenValidator : IMicrosoftTokenValidator
     {
-        private const string userInfoEndpoint = "https://www.googleapis.com/oauth2/v2/userinfo?access_token={token}";
-        private const string tokenReplacement = "{token}";
+        private const string userInfoEndpoint = "https://graph.microsoft.com/oidc/userinfo";
 
         private readonly HttpClient _client;
 
-        public GoogleTokenValidator(HttpClient client)
+        public MicrosoftTokenValidator(HttpClient client)
         {
             _client = client;
         }
@@ -37,11 +36,13 @@ namespace IdentityServer.ExtensionGrant.Delegation.TokenValidators
         {
             var tokenValues = OAuth1Helper.GetResponseValues(token);
             tokenValues.TryGetValue("access_token", out string accessToken);
-            token = accessToken ?? token;
 
-            var endpoint = userInfoEndpoint.Replace(tokenReplacement, token);
+            string authorizationHeader = $"Bearer {accessToken ?? token}";
 
-            var response = await _client.GetAsync(endpoint);
+            _client.DefaultRequestHeaders.Clear();
+            _client.DefaultRequestHeaders.Add("Authorization", authorizationHeader);
+
+            var response = await _client.GetAsync(userInfoEndpoint);
             if (response.IsSuccessStatusCode)
             {
                 var userInfo = JsonDocument.Parse(await response.Content.ReadAsStringAsync());

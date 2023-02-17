@@ -143,6 +143,16 @@
             Not implemented. Use <see cref="M:IdentityServer.ExtensionGrant.Delegation.TokenValidators.GoogleTokenValidator.ValidateAccessTokenAsync(System.String,System.String)" />. 
             </summary>
         </member>
+        <member name="M:IdentityServer.ExtensionGrant.Delegation.TokenValidators.MicrosoftTokenValidator.ValidateIdentityTokenAsync(System.String,System.String,System.Boolean)">
+            <summary>
+            Not implemented. Use <see cref="M:IdentityServer.ExtensionGrant.Delegation.TokenValidators.MicrosoftTokenValidator.ValidateAccessTokenAsync(System.String,System.String)" />. 
+            </summary>
+        </member>
+        <member name="M:IdentityServer.ExtensionGrant.Delegation.TokenValidators.MicrosoftTokenValidator.ValidateRefreshTokenAsync(System.String,Duende.IdentityServer.Models.Client)">
+            <summary>
+            Not implemented. Use <see cref="M:IdentityServer.ExtensionGrant.Delegation.TokenValidators.MicrosoftTokenValidator.ValidateAccessTokenAsync(System.String,System.String)" />. 
+            </summary>
+        </member>
         <member name="M:IdentityServer.ExtensionGrant.Delegation.TokenValidators.TwitterTokenValidator.ValidateIdentityTokenAsync(System.String,System.String,System.Boolean)">
             <summary>
             Not implemented. Use <see cref="M:IdentityServer.ExtensionGrant.Delegation.TokenValidators.TwitterTokenValidator.ValidateAccessTokenAsync(System.String,System.String)" />. 
@@ -169,7 +179,7 @@
         </member>
         <member name="M:Microsoft.Extensions.DependencyInjection.ServiceExtensions.AddDefaultSocialLoginValidators(Microsoft.Extensions.DependencyInjection.IIdentityServerBuilder,System.Action{IdentityServer.ExtensionGrant.Delegation.Models.SocialLoginOptions})">
             <summary>
-            Configures Google, Facebook and Twitter token validators with the <see cref="T:IdentityServer.ExtensionGrant.Delegation.DelegationGrantValidator" />. 
+            Configures Google, Facebook, Twitter and Microsoft token validators with the <see cref="T:IdentityServer.ExtensionGrant.Delegation.DelegationGrantValidator" />. 
             </summary>
             <param name="services">The <see cref="T:Microsoft.Extensions.DependencyInjection.IIdentityServerBuilder" /> to add services to.</param>
             <returns>The <see cref="T:Microsoft.Extensions.DependencyInjection.IIdentityServerBuilder"/> so that additional calls can be chained.</returns>

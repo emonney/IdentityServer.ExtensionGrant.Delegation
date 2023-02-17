@@ -20,7 +20,7 @@ PM> Install-Package IdentityServer.ExtensionGrant.Delegation
 
 ## Setup
 
-This package includes implementation for popular social logins such as **Google**, **Facebook** and **Twitter** and is designed to be easily extensible to support other providers (e.g. Microsoft, GitHub, LinkedIn, etc.) or an in-house identity provider.  
+This package includes implementation for popular social logins such as **Google**, **Facebook**, **Twitter** and **Microsoft** and is designed to be easily extensible to support other providers (e.g. Microsoft, GitHub, LinkedIn, etc.) or an in-house identity provider.  
 See section on [Customizing](#customizing) on how to add additional providers.
 
 Configure in Startup:
@@ -28,10 +28,10 @@ Configure in Startup:
    services.AddIdentityServer()
            /** Other IdentityServer Configurations here **/
            .AddDelegationGrant<IdentityUser, String>() // Register the extension grant 
-           .AddDefaultSocialLoginValidators(); // Add google, facebook, twitter login support
+           .AddDefaultSocialLoginValidators(); // Add google, facebook, twitter, microsoft login support
 ```
 
-Google and Facebook uses OAuth2 or some close variation of it. In the simplest form you can implement an implicit flow, which involves redirecting the user agent to the Provider's page and obtaining an access token from the provider. This access token is then exchanged for an IdentityServer access token using this library.  
+Google, Facebook and Microsoft uses OAuth2 or some close variation of it. In the simplest form you can implement an implicit flow, which involves redirecting the user agent to the Provider's page and obtaining an access token from the provider. This access token is then exchanged for an IdentityServer access token using this library.  
 
 Twitter however uses OAuth1 for login which involves a [3-step process](https://developer.twitter.com/en/docs/twitter-for-websites/log-in-with-twitter/guides/implementing-sign-in-with-twitter) to obtain an access token.  
 This library provides you with the `OAuth1Helper` utility class which you can use to independently generate the necessary tokens and signature for this process.  
@@ -42,7 +42,7 @@ The configuration above should be modified to include the twitter `ConsumerAPIKe
    services.AddIdentityServer()
            /** Other IdentityServer Configurations here **/
            .AddDelegationGrant<IdentityUser, String>() // Register the extension grant 
-           .AddDefaultSocialLoginValidators(options => // Add google, facebook, twitter login support
+           .AddDefaultSocialLoginValidators(options => // Add google, facebook, twitter, microsoft login support
            {
                options.TwitterConsumerAPIKey = Configuration["Twitter:ConsumerAPIKey"];
                options.TwitterConsumerSecret = Configuration["Twitter:ConsumerSecret"];

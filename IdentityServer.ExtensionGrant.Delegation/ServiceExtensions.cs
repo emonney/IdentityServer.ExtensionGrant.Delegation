@@ -37,7 +37,7 @@ namespace Microsoft.Extensions.DependencyInjection
         }
 
         /// <summary>
-        /// Configures Google, Facebook and Twitter token validators with the <see cref="DelegationGrantValidator" />. 
+        /// Configures Google, Facebook, Twitter and Microsoft token validators with the <see cref="DelegationGrantValidator" />. 
         /// </summary>
         /// <param name="services">The <see cref="IIdentityServerBuilder" /> to add services to.</param>
         /// <returns>The <see cref="IIdentityServerBuilder"/> so that additional calls can be chained.</returns>
@@ -52,6 +52,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.Services.AddHttpClient<IGoogleTokenValidator, GoogleTokenValidator>();
             services.Services.AddHttpClient<IFacebookTokenValidator, FacebookTokenValidator>();
             services.Services.AddHttpClient<ITwitterTokenValidator, TwitterTokenValidator>();
+            services.Services.AddHttpClient<IMicrosoftTokenValidator, MicrosoftTokenValidator>();
             services.Services.AddTransient<OAuth1Helper>();
 
             services.AddTokenValidators(options =>
@@ -59,6 +60,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 options.AddValidator<IGoogleTokenValidator>(DefaultTokenProviders.Google);
                 options.AddValidator<IFacebookTokenValidator>(DefaultTokenProviders.Facebook);
                 options.AddValidator<ITwitterTokenValidator>(DefaultTokenProviders.Twitter);
+                options.AddValidator<IMicrosoftTokenValidator>(DefaultTokenProviders.Microsoft);
             });
 
             return services;

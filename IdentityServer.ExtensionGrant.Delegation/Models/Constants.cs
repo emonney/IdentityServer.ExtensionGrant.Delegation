@@ -19,5 +19,6 @@ namespace IdentityServer.ExtensionGrant.Delegation.Models
         public const string Google = "google";
         public const string Facebook = "facebook";
         public const string Twitter = "twitter";
+        public const string Microsoft = "microsoft";
     }
 }
