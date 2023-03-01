@@ -6,7 +6,7 @@
     <Authors>Ebenezer Monney</Authors>
     <Product>QuickApp</Product>
     <Description>IdentityServer extension grant implementation to exchange external tokens for IdentityServer access tokens. Includes implementation for popular social logins such as google, facebook, twitter, microsoft, etc.</Description>
-    <Version>2.1.0</Version>
+    <Version>2.2.0</Version>
     <Copyright>www.ebenmonney.com</Copyright>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/emonney/IdentityServer.ExtensionGrant.Delegation.git</RepositoryUrl>
